@@ -38,39 +38,3 @@ Student.belongsTo(Login, { foreignKey: "login_id", allowNull: false });
 Student.sync();
 
 module.exports = Student;
-
-// module.exports = {
-//   findAll: async function () {
-//     return await Student.findAll();
-//   },
-
-//   save: async function (nome, autor, editora, ano) {
-//     const book = await Student.create({
-//       nome: nome,
-//       autor: autor,
-//       editora: editora,
-//       ano: ano,
-//     });
-//     return book;
-//   },
-
-//   update: async function (id, obj) {
-//     let book = await Student.findByPk(id);
-//     if (!book) {
-//       return false;
-//     }
-
-//     Object.keys(obj).forEach((key) => (book[key] = obj[key]));
-//     await book.save();
-//     return book;
-//   },
-
-//   delete: async function (id) {
-//     const book = await Student.findByPk(id);
-//     return book.destroy();
-//   },
-
-//   getById: async function (id) {
-//     return await Student.findByPk(id);
-//   },
-// };

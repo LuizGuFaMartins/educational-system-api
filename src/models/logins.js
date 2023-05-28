@@ -1,6 +1,5 @@
 const Sequelize = require("sequelize");
 const database = require("../services/database");
-const Student = require("./students");
 
 const Login = database.define(
   "logins",
@@ -37,40 +36,3 @@ const Login = database.define(
 Login.sync();
 
 module.exports = Login;
-
-
-// module.exports = {
-//   findAll: async function () {
-//     return await Login.findAll();
-//   },
-
-//   save: async function (nome, autor, editora, ano) {
-//     const book = await Login.create({
-//       nome: nome,
-//       autor: autor,
-//       editora: editora,
-//       ano: ano,
-//     });
-//     return book;
-//   },
-
-//   update: async function (id, obj) {
-//     let book = await Login.findByPk(id);
-//     if (!book) {
-//       return false;
-//     }
-
-//     Object.keys(obj).forEach((key) => (book[key] = obj[key]));
-//     await book.save();
-//     return book;
-//   },
-
-//   delete: async function (id) {
-//     const book = await Login.findByPk(id);
-//     return book.destroy();
-//   },
-
-//   getById: async function (id) {
-//     return await Login.findByPk(id);
-//   },
-// };
