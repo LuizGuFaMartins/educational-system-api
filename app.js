@@ -23,7 +23,7 @@ app.use(session({
   cookie: { secure: false } // "secure: false" deve ser usado em desenvolvimento. Em produção, defina como "true" para usar HTTPS.
 }));
 
-app.use('/', indexRouter);
+app.use('/api', indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

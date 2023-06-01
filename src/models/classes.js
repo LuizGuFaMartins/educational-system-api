@@ -1,5 +1,5 @@
 const Sequelize = require("database");
-const database = require("../services/database");
+const database = require("../resources/database");
 
 const Class = database.define("classes", {
   class_id: {
