@@ -16,16 +16,47 @@ exports.save = () => {
 };
 
 exports.login = async (req, res) => {
-  const { usuario, senha } = req.body;
-  console.log("foi")
-  if (usuario != "" && senha == "teste") {
-    //Permissao = Criar token
-    const token = jwt.sign({ user: usuario }, "A1B2C3D4", {
-      expiresIn: "1 hr",
+  const { login_email, password } = req.body;
+  let response;
+
+  Login.findOne({
+    where: {
+      login_email: login_email,
+    },
+  })
+    .then((login) => {
+      if (login) {
+        if (password === login.password) {
+          const token = jwt.sign({ user: login_email }, process.env.JWT_KEY, {
+            expiresIn: 10000,
+          });
+          response = res.status(200).json({
+            login_id: login.login_id,
+            login_name: login.login_name,
+            login_email: login_email,
+            access_token: token,
+          });
+        } else {
+          response = res.status(400).json({ error: "Invalid credentials" });
+        }
+      } else {
+        response = res.status(400).json({ error: "User not found" });
+      }
+    })
+    .catch((err) => {
+      console.log("\n ERROR: ", err, "\n");
+      response = res.status(500).json({ error: "Login query error" });
     });
-    res.json({ status: true, token: token, usuario: usuario });
-  } else {
-    //Sem permissao = sem token
-    res.status(403).json({ status: false });
-  }
+
+  return response;
+};
+
+exports.auth = async (req, res) => {
+  const { usuario, senha } = req.body;
+
+  const token = jwt.sign({ user: usuario }, "my_secret_key", {
+    expiresIn: 10000,
+  });
+
+  return res.status(201).json({ user: usuario, accessToken: token });
 };
