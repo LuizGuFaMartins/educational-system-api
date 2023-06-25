@@ -23,7 +23,7 @@ const Login = database.define(
     },
     login_photo_url: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
     },
   },
   {

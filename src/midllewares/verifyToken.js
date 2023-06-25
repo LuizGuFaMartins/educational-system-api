@@ -7,7 +7,7 @@ exports.verifyToken = async (req, res, next) => {
       req.usuario = decoded.user;
       return next();
     } else {
-      res.status(403).json({ error: "Unauthorized user" });
+      res.status(401).json({ error: "Unauthorized user" });
     }
   });
 };

@@ -11,6 +11,37 @@ exports.findAll = async (req, res, next) => {
   }
 };
 
-// exports.create = (student) => {
-//   return {};
-// };
+exports.create = async (req, res) => {
+  console.log("student: ", req.body);
+
+  let existentLogin = await Login.findOne({
+    where: {
+      login_email: req.body.loginEmail,
+    },
+  });
+  console.log("login: ", existentLogin);
+  if (!existentLogin) {
+    let login = {
+      login_email: req.body.loginEmail,
+      login_password: req.body.loginPassword,
+      login_name: req.body.studentName,
+      login_photo_url: req.body.loginPhotoUrl,
+    };
+
+    let savedLogin = await Login.create(login);
+
+    let data = {
+      student_name: req.body.studentName,
+      student_birthday: req.body.studentBirthday,
+      student_phone_number: req.body.studentPhoneNumber,
+      login_id: savedLogin.login_id,
+    };
+
+    let savedStudent = await Student.create(data);
+    return res.status(201).json(savedStudent);
+  } else {
+    return res
+      .status(400)
+      .json({ error: "Já existe um usuário com este e-mail" });
+  }
+};

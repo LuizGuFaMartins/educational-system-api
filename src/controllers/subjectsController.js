@@ -1,15 +1,9 @@
-const Student = require("../models/students");
+const Subject = require("../models/subjects");
 const Login = require("../models/logins");
 
 exports.findAll = async (req, res) => {
   try {
-    const list = await Student.findAll({
-      include: [
-        {
-          model: Login,
-        },
-      ],
-    });
+    const list = await Subject.findAll();
     return res.json(list);
   } catch (error) {
     console.log(error);

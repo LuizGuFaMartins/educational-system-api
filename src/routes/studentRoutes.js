@@ -4,6 +4,6 @@ const { verifyToken } = require("../midllewares/verifyToken");
 const studentRouter = express.Router();
 
 studentRouter.get("/", verifyToken, controller.findAll);
-// studentRouter.post("/", verifyToken, controller.create);
+studentRouter.post("/", controller.create);
 
 module.exports = studentRouter;

@@ -17,7 +17,7 @@ const Student = database.define(
     },
     student_birthday: {
       type: Sequelize.DATE,
-      allowNull: false,
+      allowNull: true,
     },
     student_phone_number: {
       type: Sequelize.STRING,

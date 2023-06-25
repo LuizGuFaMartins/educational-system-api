@@ -4,7 +4,7 @@ const studentRouter = require("./studentRoutes");
 const loginRouter = require("./loginRoutes");
 const { verifyToken } = require("../midllewares/verifyToken");
 
-router.use("/logins", loginRouter);
-router.use("/students", verifyToken, studentRouter);
+router.use("/login", loginRouter);
+router.use("/students", studentRouter);
 
 module.exports = router;

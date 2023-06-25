@@ -16,25 +16,25 @@ exports.save = () => {
 };
 
 exports.login = async (req, res) => {
-  const { login_email, password } = req.body;
+  const { loginEmail, loginPassword } = req.body;
   let response;
 
   Login.findOne({
     where: {
-      login_email: login_email,
+      login_email: loginEmail,
     },
   })
     .then((login) => {
       if (login) {
-        if (password === login.password) {
-          const token = jwt.sign({ user: login_email }, process.env.JWT_KEY, {
+        if (loginPassword === login.login_password) {
+          const token = jwt.sign({ user: loginEmail }, process.env.JWT_KEY, {
             expiresIn: 10000,
           });
           response = res.status(200).json({
-            login_id: login.login_id,
-            login_name: login.login_name,
-            login_email: login_email,
-            access_token: token,
+            loginId: login.login_id,
+            loginName: login.login_name,
+            loginEmail: loginEmail,
+            accessToken: token,
           });
         } else {
           response = res.status(400).json({ error: "Invalid credentials" });
@@ -49,14 +49,4 @@ exports.login = async (req, res) => {
     });
 
   return response;
-};
-
-exports.auth = async (req, res) => {
-  const { usuario, senha } = req.body;
-
-  const token = jwt.sign({ user: usuario }, "my_secret_key", {
-    expiresIn: 10000,
-  });
-
-  return res.status(201).json({ user: usuario, accessToken: token });
 };
