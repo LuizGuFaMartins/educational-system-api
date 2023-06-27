@@ -20,18 +20,18 @@ exports.create = async (req, res) => {
 
   if (!existentLogin) {
     let login = {
-      login_email: req.body.loginEmail,
-      login_password: req.body.loginPassword,
-      login_name: req.body.studentName,
-      login_photo_url: req.body.loginPhotoUrl,
+      login_email: req.body.login_email,
+      login_password: req.body.login_password,
+      login_name: req.body.student_name,
+      login_photo_url: req.body.login_photo_url,
     };
 
     let savedLogin = await Login.create(login);
 
     let data = {
-      student_name: req.body.studentName,
-      student_birthday: req.body.studentBirthday,
-      student_phone_number: req.body.studentPhoneNumber,
+      student_name: req.body.student_name,
+      student_birthday: req.body.student_birthday,
+      student_phone_number: req.body.student_phone_number,
       login_id: savedLogin.login_id,
     };
 
