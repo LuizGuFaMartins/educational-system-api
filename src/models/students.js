@@ -1,6 +1,5 @@
 const Sequelize = require("sequelize");
 const database = require("../resources/database");
-const logins = require("./logins");
 const Login = require("./logins");
 
 const Student = database.define(

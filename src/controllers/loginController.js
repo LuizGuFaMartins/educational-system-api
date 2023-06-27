@@ -11,8 +11,70 @@ exports.findAll = async (req, res) => {
   }
 };
 
-exports.save = () => {
-  return {};
+exports.findOne = async (req, res) => {
+  try {
+    const login = await Login.findOne({
+      where: { login_id: req.params.loginId },
+    });
+    return res.json({
+      login_email: login.login_email,
+      login_name: login.login_name,
+      login_id: login.login_id,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json(error);
+  }
+};
+
+exports.update = async (req, res) => {
+  let savedLogin = await Login.update(
+    {
+      login_email: req.body.loginEmail,
+      login_password: req.body.loginPassword,
+      login_name: req.body.loginName,
+      login_photo_url: req.body.loginPhotoUrl,
+    },
+    {
+      where: { login_id: req.params.loginId },
+    }
+  );
+
+  const login = await Login.findOne({
+    where: { login_id: req.params.loginId },
+  });
+
+  return res.status(201).json({
+    loginId: login.login_id,
+    loginName: login.login_name,
+    loginEmail: login.login_email,
+  });
+};
+
+exports.unnactive = async (req, res) => {
+  const login = await Login.findOne({
+    where: { login_id: req.params.loginId },
+  });
+
+  await Login.update(
+    {
+      ...login,
+      login_email: "inativo_" + login.login_email,
+    },
+    {
+      where: { login_id: req.params.loginId },
+    }
+  );
+
+  return res.status(200).json({});
+};
+
+exports.delete = async (req, res) => {
+  await Login.destroy({
+    where: { login_id: req.params.loginId },
+  });
+
+  return res.status(200);
 };
 
 exports.login = async (req, res) => {

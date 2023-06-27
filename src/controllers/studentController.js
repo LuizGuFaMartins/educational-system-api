@@ -12,14 +12,12 @@ exports.findAll = async (req, res, next) => {
 };
 
 exports.create = async (req, res) => {
-  console.log("student: ", req.body);
-
   let existentLogin = await Login.findOne({
     where: {
       login_email: req.body.loginEmail,
     },
   });
-  console.log("login: ", existentLogin);
+
   if (!existentLogin) {
     let login = {
       login_email: req.body.loginEmail,
