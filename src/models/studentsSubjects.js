@@ -3,27 +3,33 @@ const database = require("../resources/database");
 const Subject = require("./subjects");
 const Student = require("./students");
 
-const StudentSubject = database.define("students_subjects", {
-  subject_id: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    allowNull: false,
+const StudentSubject = database.define(
+  "students_subjects",
+  {
+    subject_id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+    },
+    student_id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+    },
   },
-  student_id: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    allowNull: false,
-  },
-});
+  {
+    timestamps: false,
+  }
+);
 
-StudentSubject.belongsTo(Subject, {
-  foreignKey: "subject_id",
-  allowNull: false,
-});
-Student.belongsTo(Subject, {
-  foreignKey: "student_id",
-  allowNull: false,
-});
+// StudentSubject.belongsTo(Subject, {
+//   foreignKey: "subject_id",
+//   allowNull: false,
+// });
+// Student.belongsTo(Subject, {
+//   foreignKey: "student_id",
+//   allowNull: false,
+// });
 
 StudentSubject.sync();
 

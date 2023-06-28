@@ -1,6 +1,8 @@
 const Sequelize = require("sequelize");
 const database = require("../resources/database");
 const Teacher = require("./teachers");
+const StudentSubject = require("./studentsSubjects");
+const Student = require("./students");
 
 const Subject = database.define(
   "subjects",
@@ -33,7 +35,10 @@ const Subject = database.define(
 );
 
 Subject.belongsTo(Teacher, { foreignKey: "teacher_id", allowNull: false });
-
+// Subject.belongsToMany(Student, {
+//   through: StudentSubject,
+//   foreignKey: "subject_id",
+// });
 
 Subject.sync();
 

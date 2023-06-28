@@ -1,3 +1,4 @@
+const { Sequelize } = require("sequelize");
 const Student = require("../models/students");
 const StudentSubject = require("../models/studentsSubjects");
 const Subject = require("../models/subjects");
@@ -22,23 +23,20 @@ exports.findAll = async (req, res) => {
 
 exports.findPerStudent = async (req, res) => {
   try {
-    console.log("\n\nid: ", req.params.studentId);
-
-    const student = await Student.findOne({
+    const studentSubject = await StudentSubject.findAll({
       where: { student_id: req.params.studentId },
     });
+
+    let subjectsIds = studentSubject.map((element) => element.subject_id);
     const subjects = await Subject.findAll({
-      include: [
-        {
-          model: Student,
-          where: { id: student.id },
+      where: {
+        subject_id: {
+          [Sequelize.Op.in]: subjectsIds,
         },
-      ],
+      },
     });
 
-    console.log("\n\n subjects: ", subjects);
-
-    return res.json(list);
+    return res.json(subjects);
   } catch (error) {
     console.log(error);
     return res.json(error);
