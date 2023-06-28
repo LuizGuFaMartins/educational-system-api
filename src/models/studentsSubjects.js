@@ -22,14 +22,14 @@ const StudentSubject = database.define(
   }
 );
 
-// StudentSubject.belongsTo(Subject, {
-//   foreignKey: "subject_id",
-//   allowNull: false,
-// });
-// Student.belongsTo(Subject, {
-//   foreignKey: "student_id",
-//   allowNull: false,
-// });
+StudentSubject.belongsTo(Subject, {
+  foreignKey: "subject_id",
+  allowNull: false,
+});
+StudentSubject.belongsTo(Student, {
+  foreignKey: "student_id",
+  allowNull: false,
+});
 
 StudentSubject.sync();
 

@@ -1,8 +1,6 @@
 const Sequelize = require("sequelize");
 const database = require("../resources/database");
 const Login = require("./logins");
-const StudentSubject = require("./studentsSubjects");
-const Subject = require("./subjects");
 
 const Student = database.define(
   "students",

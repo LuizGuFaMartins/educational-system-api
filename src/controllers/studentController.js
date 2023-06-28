@@ -43,3 +43,18 @@ exports.create = async (req, res) => {
       .json({ error: "Já existe um usuário com este e-mail" });
   }
 };
+
+exports.findPerLoginId = async (req, res) => {
+  try {
+    const student = await Student.findAll({
+      where: {
+        login_id: req.params.loginId
+      },
+    });
+
+    return res.json(student);
+  } catch (error) {
+    console.log(error);
+    return res.json(error);
+  }
+};

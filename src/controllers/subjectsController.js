@@ -24,17 +24,16 @@ exports.findAll = async (req, res) => {
 exports.findPerStudent = async (req, res) => {
   try {
     const studentSubject = await StudentSubject.findAll({
+      include: [
+        {
+          model: Subject,
+          as: "subject",
+        },
+      ],
       where: { student_id: req.params.studentId },
     });
 
-    let subjectsIds = studentSubject.map((element) => element.subject_id);
-    const subjects = await Subject.findAll({
-      where: {
-        subject_id: {
-          [Sequelize.Op.in]: subjectsIds,
-        },
-      },
-    });
+    let subjects = studentSubject.map((element) => element.subject);
 
     return res.json(subjects);
   } catch (error) {
