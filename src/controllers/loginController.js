@@ -1,6 +1,18 @@
 const Login = require("../models/logins");
 const jwt = require("jsonwebtoken");
 
+exports.findCount = async (req, res) => {
+  const login = await Login.findOne({
+    where: { login_id: req.params.loginId },
+  });
+  return res.json({
+    login_email: login.login_email,
+    login_name: login.login_name,
+    login_id: login.login_id,
+    login_count: login.login_count,
+  });
+};
+
 exports.findAll = async (req, res) => {
   try {
     const list = await Login.findAll();
@@ -92,6 +104,23 @@ exports.login = async (req, res) => {
           const token = jwt.sign({ user: loginEmail }, process.env.JWT_KEY, {
             expiresIn: 10000,
           });
+
+          let count = login.login_count;
+          if (count === null) {
+            count = 1;
+          } else {
+            count = Number(count) + 1;
+          }
+
+          Login.update(
+            {
+              login_count: count,
+            },
+            {
+              where: { login_id: login.login_id },
+            }
+          );
+
           response = res.status(200).json({
             loginId: login.login_id,
             loginName: login.login_name,

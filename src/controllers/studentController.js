@@ -14,7 +14,7 @@ exports.findAll = async (req, res, next) => {
 exports.create = async (req, res) => {
   let existentLogin = await Login.findOne({
     where: {
-      login_email: req.body.loginEmail,
+      login_email: req.body.login_email,
     },
   });
 

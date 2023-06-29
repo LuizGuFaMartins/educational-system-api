@@ -94,7 +94,7 @@ exports.cancelSubscription = async (req, res) => {
 
 exports.subscribe = async (req, res) => {
   try {
-    const existent = await StudentSubject.findAll({
+    const existent = await StudentSubject.findOne({
       where: {
         student_id: req.body.student_id,
         subject_id: req.body.subject_id,

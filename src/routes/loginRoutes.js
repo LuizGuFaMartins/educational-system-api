@@ -6,6 +6,7 @@ const { validateLoginId } = require("../validators/LoginValidator");
 
 loginRouter.post("/", controller.login);
 loginRouter.get("/:loginId", verifyToken, validateLoginId, controller.findOne);
+loginRouter.get("/count/:loginId", verifyToken, validateLoginId, controller.findCount);
 loginRouter.put("/:loginId", verifyToken, validateLoginId, controller.update);
 loginRouter.put(
   "/unnactive/:loginId",
